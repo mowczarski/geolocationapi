@@ -3,16 +3,12 @@ using GeolocationAPI.Clients;
 using GeolocationAPI.Clients.Contracts;
 using GeolocationAPI.EF;
 using GeolocationAPI.EF.Repositories;
-using GeolocationAPI.Models;
 using GeolocationAPI.Swagger;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using Serilog;
 using System;
-using System.Collections.Generic;
 
 namespace GeolocationAPI
 {
@@ -34,14 +30,17 @@ namespace GeolocationAPI
             builder.Services.AddScoped<IUnitOfWork>(x => x.GetService<DataContext>());
             builder.Services.AddScoped<GeolocationRepository>();
 
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.File("logs/apilog.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
             var app = builder.Build();
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
+            app.UseHttpsRedirection();
             app.UseMiddleware<AuthMiddleware>();
             app.UseAuthorization();
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace GeolocationAPI.Controllers
 {
@@ -9,7 +10,8 @@ namespace GeolocationAPI.Controllers
         [Route("TestConnection")]
         public IActionResult Test()
         {
-           return Ok("API Works!!");
+            Log.Information("API Works!!");
+            return Ok("API Works!!");
         }
     }
 }

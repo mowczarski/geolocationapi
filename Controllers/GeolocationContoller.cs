@@ -2,6 +2,8 @@ using GeolocationAPI.Clients;
 using GeolocationAPI.EF.Repositories;
 using GeolocationAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,7 +33,9 @@ namespace GeolocationAPI.Controllers
         public async Task<IActionResult> GetGeolocationFromDb(string ipAddress, CancellationToken cancellationToken)
         {
             var geolocation = await _geolocationRepository.Get(ipAddress, cancellationToken);
+            
             return Ok(geolocation);
+        
         }
     }
 }
