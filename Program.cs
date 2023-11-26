@@ -1,6 +1,11 @@
+using GeolocationAPI.Authentication;
+using GeolocationAPI.Swagger;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using System.Collections.Generic;
 
 namespace GeolocationAPI
 {
@@ -11,9 +16,8 @@ namespace GeolocationAPI
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
-
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddAndConfigureSwagger();
 
             var app = builder.Build();
 
@@ -23,6 +27,7 @@ namespace GeolocationAPI
                 app.UseSwaggerUI();
             }
 
+            app.UseMiddleware<AuthMiddleware>();
             app.UseAuthorization();
 
             app.MapControllers();

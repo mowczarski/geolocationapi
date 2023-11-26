@@ -6,7 +6,7 @@ namespace GeolocationAPI.Controllers
     public class TestController : ControllerBase
     {
         [HttpGet]
-        [Route("Test")]
+        [Route("TestConnection")]
         public IActionResult Test()
         {
            return Ok("API Works!!");
