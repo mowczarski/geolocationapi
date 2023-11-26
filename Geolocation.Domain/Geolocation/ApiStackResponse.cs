@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Geolocation.API.Clients.ApiStack
+namespace Geolocation.Domain
 {
     public class ApiStackResponse
     {
@@ -16,21 +16,21 @@ namespace Geolocation.API.Clients.ApiStack
         public string zip { get; set; }
         public double latitude { get; set; }
         public double longitude { get; set; }
-        public Location location { get; set; }
+        public ApiStackLocation location { get; set; }
     }
 
-    public class Language
+    public class ApiStackLanguage
     {
         public string code { get; set; }
         public string name { get; set; }
         public string native { get; set; }
     }
 
-    public class Location
+    public class ApiStackLocation
     {
         public int geoname_id { get; set; }
         public string capital { get; set; }
-        public List<Language> languages { get; set; }
+        public List<ApiStackLanguage> languages { get; set; }
         public string country_flag { get; set; }
         public string country_flag_emoji { get; set; }
         public string country_flag_emoji_unicode { get; set; }

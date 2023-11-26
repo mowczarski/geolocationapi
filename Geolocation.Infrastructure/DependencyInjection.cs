@@ -1,11 +1,13 @@
-using Geolocation.API.Clients.ApiStack;
 using Geolocation.Domain;
+using Geolocation.Domain.Abstrations;
+using Geolocation.Infrastructure.Clients.ApiStack;
+using Geolocation.Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Geolocation.Infrastructure 
-{ 
+namespace Geolocation.Infrastructure
+{
     public static class DependencyInjection
     {
         public static IServiceCollection AddInfrastructure(

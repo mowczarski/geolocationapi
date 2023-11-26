@@ -1,9 +1,11 @@
-﻿using System.Net.Http;
+﻿using Geolocation.Domain;
+using Geolocation.Domain.Abstrations;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Geolocation.API.Clients.ApiStack
+namespace Geolocation.Infrastructure.Clients.ApiStack
 {
     public class ApiStackClient : IApiStackClient
     {
@@ -16,7 +18,7 @@ namespace Geolocation.API.Clients.ApiStack
             _apiStackConfiguration = configuration;
         }
 
-        public async Task<ApiStackResponse> GetGeolocationData(string ipAddress, CancellationToken cancellationToken)
+        public async Task<ApiStackResponse> GetGeolocationDataAsync(string ipAddress, CancellationToken cancellationToken)
             => await _httpClient.GetFromJsonAsync<ApiStackResponse>($"{ipAddress}?access_key={_apiStackConfiguration.ApiKey}", cancellationToken);
     }
 }

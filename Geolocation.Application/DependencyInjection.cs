@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Geolocation.Application {
-
+namespace Geolocation.Application 
+{
     public static class DependencyInjection
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)

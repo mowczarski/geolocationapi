@@ -1,4 +1,5 @@
-using Geolocation.Application.Abstractions.Messaging;
+using Geolocation.Application.Messaging;
+using Geolocation.Domain;
 using Geolocation.Domain.Abstrations;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,9 +18,29 @@ namespace Geolocation.Application
 
     public class RemoveGeolocationCommandHandler : ICommandHandler<RemoveGeolocationCommand>
     {
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IGeolocalizationRepository _geolocalizationRepository;
+
+        public RemoveGeolocationCommandHandler(IGeolocalizationRepository geolocalizationRepository, IUnitOfWork unitOfWork)
+        {
+            _geolocalizationRepository = geolocalizationRepository;
+            _unitOfWork = unitOfWork;
+        }
+
         public async Task<Result> Handle(RemoveGeolocationCommand command, CancellationToken cancellationToken)
         {
-            return Result.Success();
-        }
+            var geolocation = await _geolocalizationRepository.GetAsync(command.Address, cancellationToken);
+
+            if (geolocation != null)
+            {
+                _geolocalizationRepository.Remove(geolocation);
+
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+                return Result.Success();
+            }
+
+            return Result.Failure(Error.NullValue);
+        } 
     }
 }

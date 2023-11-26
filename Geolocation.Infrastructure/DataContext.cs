@@ -1,12 +1,15 @@
 ﻿using Geolocation.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Reflection.Metadata;
 
 namespace Geolocation.Infrastructure
 {
     public class DataContext : DbContext, IUnitOfWork
     {
         public DbSet<Geolocalization> Geolocalizations { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Language> Languages { get; set; }
 
         protected readonly IConfiguration _configuration;
 
@@ -23,13 +26,14 @@ namespace Geolocation.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Geolocalization>(entity =>
-            { 
+            {
                 entity.ToTable(nameof(Geolocation))
                     .HasKey(e => e.Id);
 
-                entity.HasMany(e => e.Locations)
+                entity.HasOne(e => e.Location)
                     .WithOne()
-                    .HasForeignKey("GeolocationId");
+                    .HasForeignKey<Location>("GeolocationId")
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Location>(entity =>
@@ -39,7 +43,8 @@ namespace Geolocation.Infrastructure
 
                 entity.HasMany(e => e.Languages)
                     .WithOne()
-                    .HasForeignKey("LocationId");
+                    .HasForeignKey("LocationId")
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Language>(entity =>

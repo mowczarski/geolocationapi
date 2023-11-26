@@ -4,10 +4,26 @@ namespace Geolocation.Domain
 {
     public class Location : EntityBase<int>
     {
-        public int GeolocationId { get; set; }
-        public string CountryFlag { get; set; }
-        public string CallingCode { get; set; }
-        public bool IsEurope { get; set; }
-        public List<Language> Languages { get; set; }
+        public int GeonameId { get; private set; }
+        public string CountryFlag { get; private  set; }
+        public string CallingCode { get; private set; }
+        public bool IsEurope { get; private set; }
+        public List<Language> Languages { get; private set; }
+
+        public Location(
+            int geonameId,
+            string countryFlag, 
+            string callingCode,
+            bool isEurope,
+            List<Language> languages) : base()
+        { 
+            GeonameId = geonameId;
+            CountryFlag = countryFlag;
+            CallingCode = callingCode;
+            IsEurope = isEurope;
+            Languages = languages;
+        }
+
+        public Location() { }
     }
 }

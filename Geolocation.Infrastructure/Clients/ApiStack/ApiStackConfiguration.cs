@@ -1,4 +1,4 @@
-﻿namespace Geolocation.API.Clients.ApiStack
+﻿namespace Geolocation.Infrastructure.Clients.ApiStack
 {
     public class ApiStackConfiguration : IApiStackConfiguration
     {

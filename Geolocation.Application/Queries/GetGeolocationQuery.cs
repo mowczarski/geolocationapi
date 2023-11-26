@@ -1,10 +1,10 @@
-using Geolocation.Application.Abstractions.Messaging;
+using Geolocation.Application.Messaging;
 using Geolocation.Domain.Abstrations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Geolocation.Application 
-{ 
+namespace Geolocation.Application
+{
     public class GetGeolocationQuery : IQuery<GetGeolocationResponse>
     {
         public string Address { get; }
@@ -17,13 +17,34 @@ namespace Geolocation.Application
 
     public class GetGeolocationQueryHandler : IQueryHandler<GetGeolocationQuery, GetGeolocationResponse>
     {
-        public GetGeolocationQueryHandler()
+        private readonly IGeolocalizationRepository _geolocalizationRepository;
+        public GetGeolocationQueryHandler(IGeolocalizationRepository geolocalizationRepository)
         {
+            _geolocalizationRepository = geolocalizationRepository;
         }
 
         public async Task<Result<GetGeolocationResponse>> Handle(GetGeolocationQuery request, CancellationToken cancellationToken)
         {
-            return Result.Success(new GetGeolocationResponse());
+            var result = await _geolocalizationRepository.GetAsync(request.Address, cancellationToken);
+
+            if (result != null)
+            {
+                return Result.Success(new GetGeolocationResponse(
+                    result.Type,
+                    result.Ip,
+                    result.Url,
+                    result.Latitude,
+                    result.Longitude,
+                    result.Continent,
+                    result.Country,
+                    result.Region,
+                    result.City,
+                    result.CityCode));
+            }
+            else
+            {
+                return Result.Failure<GetGeolocationResponse>(GeolocationErrors.NotFound);
+            }   
         }
     }
 }
