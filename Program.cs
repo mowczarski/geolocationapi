@@ -1,6 +1,8 @@
 using GeolocationAPI.Authentication;
 using GeolocationAPI.Clients;
 using GeolocationAPI.Clients.Contracts;
+using GeolocationAPI.EF;
+using GeolocationAPI.EF.Repositories;
 using GeolocationAPI.Models;
 using GeolocationAPI.Swagger;
 using Microsoft.AspNetCore.Builder;
@@ -27,6 +29,10 @@ namespace GeolocationAPI
             builder.Services.AddSingleton<IApiStackClient, ApiStackClient>();
             builder.Services.AddHttpClient<IApiStackClient, ApiStackClient>(
                 client => client.BaseAddress = new Uri(builder.Configuration.GetSection(nameof(ApiStackConfiguration)).Get<ApiStackConfiguration>().Address));
+
+            builder.Services.AddScoped<DataContext>();
+            builder.Services.AddScoped<IUnitOfWork>(x => x.GetService<DataContext>());
+            builder.Services.AddScoped<GeolocationRepository>();
 
             var app = builder.Build();
 

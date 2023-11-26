@@ -7,5 +7,6 @@
 
         public const string Geolocation = $"{RootPath}/geolocation";
         public const string GetGeolocation = "{ipAddress}";
+        public const string GetGeolocationFromDb = "db/{ipAddress}";
     }
 }
