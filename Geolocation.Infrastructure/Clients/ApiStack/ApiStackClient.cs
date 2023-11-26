@@ -20,6 +20,9 @@ namespace Geolocation.Infrastructure.Clients.ApiStack
 
         public async Task<ApiStackResponse> GetGeolocationDataAsync(string ipAddress, CancellationToken cancellationToken)
             => await _httpClient.GetFromJsonAsync<ApiStackResponse>($"{ipAddress}?access_key={_apiStackConfiguration.ApiKey}", cancellationToken);
+
+        public async Task<ApiStackResponse> CheckAsync(CancellationToken cancellationToken)
+            => await _httpClient.GetFromJsonAsync<ApiStackResponse>($"check?access_key={_apiStackConfiguration.ApiKey}", cancellationToken);
     }
 }
 

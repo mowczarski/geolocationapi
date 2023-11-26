@@ -11,9 +11,9 @@ namespace Geolocation.Domain
         public string country_code { get; set; }
         public string country_name { get; set; }
         public string region_code { get; set; }
-        public string region_name { get; set; }
-        public string city { get; set; }
-        public string zip { get; set; }
+        public string? region_name { get; set; }
+        public string? city { get; set; }
+        public string? zip { get; set; }
         public double latitude { get; set; }
         public double longitude { get; set; }
         public ApiStackLocation location { get; set; }
@@ -28,7 +28,7 @@ namespace Geolocation.Domain
 
     public class ApiStackLocation
     {
-        public int geoname_id { get; set; }
+        public int? geoname_id { get; set; }
         public string capital { get; set; }
         public List<ApiStackLanguage> languages { get; set; }
         public string country_flag { get; set; }

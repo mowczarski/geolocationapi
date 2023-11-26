@@ -12,21 +12,22 @@ namespace Geolocation.API.Controllers
     public class GeolocationController : ControllerBase
     {
         private readonly IMediator _mediator;
-
         public GeolocationController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpGet(Endpoints.GetGeolocation)]
-        public async Task<IActionResult> GetGeolocation(string address, CancellationToken cancellationToken)
+        
+        [HttpGet]
+        [Produces(typeof(GetGeolocationResponse))]
+        public async Task<IActionResult> GetGeolocation([FromQuery] GeolocationRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetGeolocationQuery(address);
+            var query = new GetGeolocationQuery(request.Address);
             var result = await _mediator.Send(query, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : NotFound();
         }
 
-        [HttpPost(Endpoints.AddGeolocation)]
+        [HttpPost]
         public async Task<IActionResult> AddGeolocation([FromBody] GeolocationRequest request, CancellationToken cancellationToken)
         {
             var command = new AddGeolocationCommand(request.Address);
@@ -34,7 +35,7 @@ namespace Geolocation.API.Controllers
             return result.IsFailure ? BadRequest(result.Error): Ok();
         }
 
-        [HttpDelete(Endpoints.DeleteGeolocation)]
+        [HttpDelete]
         public async Task<IActionResult> DeleteGeolocation([FromBody] GeolocationRequest request, CancellationToken cancellationToken)
         {
             var command = new RemoveGeolocationCommand(request.Address);

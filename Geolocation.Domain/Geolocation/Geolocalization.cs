@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Geolocation.Domain
+﻿namespace Geolocation.Domain
 {
     public class Geolocalization : EntityBase<int>
     {
@@ -11,9 +9,9 @@ namespace Geolocation.Domain
         public double Longitude { get; private set; }
         public string Continent { get; private set; }
         public string Country { get; private set; }
-        public string Region { get; private set; }
-        public string City { get; private set; }
-        public string CityCode { get; private set; }
+        public string? Region { get; private set; }
+        public string? City { get; private set; }
+        public string? CityCode { get; private set; }
         public virtual Location Location { get; private set; }
 
         public Geolocalization(
@@ -24,9 +22,9 @@ namespace Geolocation.Domain
             double longitude,
             string continent,
             string country,
-            string region,
-            string city,
-            string cityCode,
+            string? region,
+            string? city,
+            string? cityCode,
             Location location) : base()
         {
             Type = type;

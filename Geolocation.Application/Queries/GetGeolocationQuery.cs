@@ -18,6 +18,7 @@ namespace Geolocation.Application
     public class GetGeolocationQueryHandler : IQueryHandler<GetGeolocationQuery, GetGeolocationResponse>
     {
         private readonly IGeolocalizationRepository _geolocalizationRepository;
+
         public GetGeolocationQueryHandler(IGeolocalizationRepository geolocalizationRepository)
         {
             _geolocalizationRepository = geolocalizationRepository;

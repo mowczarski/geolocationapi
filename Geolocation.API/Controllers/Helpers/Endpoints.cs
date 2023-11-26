@@ -8,7 +8,5 @@
 
         public const string Geolocation = $"{RootPath}/geolocation";
         public const string GetGeolocation = "{address}";
-        public const string DeleteGeolocation = "remove";
-        public const string AddGeolocation = "add";
     }
 }
