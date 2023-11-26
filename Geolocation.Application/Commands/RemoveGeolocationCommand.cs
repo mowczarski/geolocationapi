@@ -1,11 +1,11 @@
-using Geolocation.Application.Messaging;
+using Geolocation.Application.Abstraction.Messaging;
 using Geolocation.Domain;
 using Geolocation.Domain.Abstrations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Geolocation.Application 
-{ 
+namespace Geolocation.Application
+{
     public class RemoveGeolocationCommand : ICommand
     {
         public string Address { get; set; }

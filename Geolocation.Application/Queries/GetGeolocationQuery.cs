@@ -1,4 +1,4 @@
-using Geolocation.Application.Messaging;
+using Geolocation.Application.Abstraction.Messaging;
 using Geolocation.Domain.Abstrations;
 using System.Threading;
 using System.Threading.Tasks;

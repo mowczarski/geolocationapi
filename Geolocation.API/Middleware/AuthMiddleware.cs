@@ -6,7 +6,6 @@ namespace Geolocation.API.Middleware
 {
     public class AuthMiddleware
     {
-
         private readonly RequestDelegate _next;
         private readonly IConfiguration _configuration;
 

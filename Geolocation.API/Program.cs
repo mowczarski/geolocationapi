@@ -3,7 +3,6 @@ using Geolocation.API.Middleware;
 using Geolocation.API.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
 using Geolocation.Application;
 using Microsoft.Extensions.Configuration;
 using FluentValidation.AspNetCore;
@@ -11,6 +10,7 @@ using System.Reflection;
 using Geolocation.Infrastructure.Healthchecks;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
+using Serilog;
 
 namespace Geolocation.API
 {
@@ -50,6 +50,7 @@ namespace Geolocation.API
 
             app.UseHttpsRedirection();
             app.UseMiddleware<AuthMiddleware>();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseAuthorization();
 
             app.MapControllers();

@@ -17,12 +17,11 @@ namespace Geolocation.API.Controllers
             _mediator = mediator;
         }
 
-        
         [HttpGet]
         [Produces(typeof(GetGeolocationResponse))]
         public async Task<IActionResult> GetGeolocation([FromQuery] GeolocationRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetGeolocationQuery(request.Address);
+            var query = new GetGeolocationQuery(request.Address.Trim());
             var result = await _mediator.Send(query, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : NotFound();
         }
@@ -30,7 +29,7 @@ namespace Geolocation.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddGeolocation([FromBody] GeolocationRequest request, CancellationToken cancellationToken)
         {
-            var command = new AddGeolocationCommand(request.Address);
+            var command = new AddGeolocationCommand(request.Address.Trim());
             var result = await _mediator.Send(command, cancellationToken);
             return result.IsFailure ? BadRequest(result.Error): Ok();
         }
@@ -38,7 +37,7 @@ namespace Geolocation.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteGeolocation([FromBody] GeolocationRequest request, CancellationToken cancellationToken)
         {
-            var command = new RemoveGeolocationCommand(request.Address);
+            var command = new RemoveGeolocationCommand(request.Address.Trim());
             var result = await _mediator.Send(command, cancellationToken);
             return result.IsFailure ? BadRequest(result.Error) : Ok();
         }

@@ -1,7 +1,7 @@
 using Geolocation.Domain.Abstrations;
 using MediatR;
 
-namespace Geolocation.Application.Messaging
+namespace Geolocation.Application.Abstraction.Messaging
 {
     public interface ICommandHandler<TCommand> : IRequestHandler<TCommand, Result> where TCommand : ICommand
     {

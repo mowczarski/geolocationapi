@@ -1,7 +1,11 @@
 ﻿using Geolocation.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Data;
 using System.Reflection.Metadata;
+using System.Threading.Tasks;
+using System.Threading;
+using System;
 
 namespace Geolocation.Infrastructure
 {
@@ -29,6 +33,8 @@ namespace Geolocation.Infrastructure
             {
                 entity.ToTable(nameof(Geolocation))
                     .HasKey(e => e.Id);
+
+                entity.Property(e => e.Type).HasConversion<string>();
 
                 entity.HasOne(e => e.Location)
                     .WithOne()

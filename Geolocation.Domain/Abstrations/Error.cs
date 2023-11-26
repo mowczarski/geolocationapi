@@ -12,5 +12,9 @@
         public static Error NotFound = new(
             "Geolocation.NotFound",
             "Geolocation with the specified identifier was not found");
+
+        public static Error ApiStackError = new(
+           "ApiStack.NoFound",
+           "ApiStack did not give proper response");
     }
 }

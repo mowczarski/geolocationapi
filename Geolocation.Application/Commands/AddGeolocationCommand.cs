@@ -1,11 +1,11 @@
-using Geolocation.Application.Messaging;
+using Geolocation.Application.Abstraction.Messaging;
 using Geolocation.Domain;
 using Geolocation.Domain.Abstrations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Geolocation.Application 
+namespace Geolocation.Application
 {
     public class AddGeolocationCommand : ICommand
     {
@@ -34,13 +34,13 @@ namespace Geolocation.Application
         {
             var geolocationData = await _apiStackClient.GetGeolocationDataAsync(command.Address, cancellationToken);
 
-            if (geolocationData != null)
+            if (geolocationData != null && geolocationData.ip != null)
             {
                 await _geolocalizationRepository.AddAsync(
                     new Geolocalization(
+                        command.Address.Equals(geolocationData.ip) ? null : command.Address,
                         geolocationData.type,
                         geolocationData.ip,
-                        command.Address.Equals(geolocationData.ip) ? null : command.Address,
                         geolocationData.latitude,
                         geolocationData.longitude,
                         geolocationData.continent_name,
@@ -53,15 +53,16 @@ namespace Geolocation.Application
                             geolocationData.location.country_flag,
                             geolocationData.location.calling_code,
                             geolocationData.location.is_eu,
-                            geolocationData.location.languages.Select(y => new Language(y.code, y.name, y.name)).ToList()))
-                        , cancellationToken);
+                            geolocationData.location.languages
+                                .Select(y => new Language(y.code, y.name, y.name)).ToList())
+                        ), cancellationToken);
 
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
 
                 return Result.Success();
             }
 
-            return Result.Failure(Error.NullValue);
+            return Result.Failure(GeolocationErrors.ApiStackError);
         }
     }
 }

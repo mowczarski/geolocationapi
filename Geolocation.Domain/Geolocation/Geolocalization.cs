@@ -1,8 +1,10 @@
-﻿namespace Geolocation.Domain
+﻿using System;
+
+namespace Geolocation.Domain
 {
     public class Geolocalization : EntityBase<int>
     {
-        public string Type { get; private set; }
+        public AddressType Type { get; private set; }
         public string Ip { get; private set; }
         public string? Url { get; private set; }
         public double Latitude { get; private set; }
@@ -15,9 +17,9 @@
         public virtual Location Location { get; private set; }
 
         public Geolocalization(
+            string url,
             string type,
             string ip,
-            string url,
             double latitude,
             double longitude,
             string continent,
@@ -27,7 +29,7 @@
             string? cityCode,
             Location location) : base()
         {
-            Type = type;
+            Type = Enum.Parse<AddressType>(type);
             Ip = ip;
             Url = url;
             Latitude = latitude;
