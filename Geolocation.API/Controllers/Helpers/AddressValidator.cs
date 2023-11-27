@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using System;
 using System.Net;
 using System.Text.RegularExpressions;
 
@@ -22,9 +23,22 @@ namespace Geolocation.API.Controllers.Helpers
 
         private bool AddressMustBeUrl(string url)
         {
-            string Pattern = @"-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)";
-            Regex Rgx = new Regex(Pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            return Rgx.IsMatch(url);
+            var tryCreate = assertUrl(url);
+
+            if (!tryCreate && Regex.IsMatch(url ?? "", @"^www.", RegexOptions.IgnoreCase))
+            {
+                url = "https://" + url;
+                return assertUrl(url);
+            }
+
+            return tryCreate;
+
+            bool assertUrl(string url)
+            {
+                Uri? uriResult;
+                return Uri.TryCreate(url, UriKind.Absolute, out uriResult)
+                    && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+            }
         }
     }
 }

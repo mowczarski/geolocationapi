@@ -1,11 +1,6 @@
 ﻿using Geolocation.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.Data;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
-using System.Threading;
-using System;
 
 namespace Geolocation.Infrastructure
 {

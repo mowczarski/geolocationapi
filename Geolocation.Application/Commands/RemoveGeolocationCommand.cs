@@ -40,7 +40,7 @@ namespace Geolocation.Application
                 return Result.Success();
             }
 
-            return Result.Failure(Error.NullValue);
+            return Result.Failure(GeolocationErrors.CannotRemove);
         } 
     }
 }

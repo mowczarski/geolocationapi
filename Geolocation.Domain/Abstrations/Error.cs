@@ -13,8 +13,16 @@
             "Geolocation.NotFound",
             "Geolocation with the specified identifier was not found");
 
+        public static Error DuplicateError = new(
+           "Geolocation.Duplicate",
+           "Cannot insert duplicated geolocation");
+
         public static Error ApiStackError = new(
            "ApiStack.NoFound",
            "ApiStack did not give proper response");
+
+        public static Error CannotRemove = new(
+           "Geolocation.CannotRemove",
+           "Cannot remove not existing geolocation");
     }
 }

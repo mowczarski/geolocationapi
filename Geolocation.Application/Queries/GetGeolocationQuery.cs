@@ -41,11 +41,9 @@ namespace Geolocation.Application
                     result.Region,
                     result.City,
                     result.CityCode));
-            }
-            else
-            {
-                return Result.Failure<GetGeolocationResponse>(GeolocationErrors.NotFound);
-            }   
+            }  
+            
+          return Result.Failure<GetGeolocationResponse>(GeolocationErrors.NotFound);         
         }
     }
 }

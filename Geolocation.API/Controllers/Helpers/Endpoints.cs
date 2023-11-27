@@ -4,9 +4,7 @@
     {
         public const string RootPath = "api";
         public const string Test = $"{RootPath}/testconnection";
-        public const string Healthcheck = $"{RootPath}/healthcheck";
-
+        public const string Healthchecks = $"/healthchecks";
         public const string Geolocation = $"{RootPath}/geolocation";
-        public const string GetGeolocation = "{address}";
     }
 }

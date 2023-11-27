@@ -11,6 +11,7 @@ using Geolocation.Infrastructure.Healthchecks;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
 using Serilog;
+using Geolocation.API.Controllers.Helpers;
 
 namespace Geolocation.API
 {
@@ -40,7 +41,7 @@ namespace Geolocation.API
             
             var app = builder.Build();
 
-            app.MapHealthChecks("/healthchecks", new HealthCheckOptions
+            app.MapHealthChecks(Endpoints.Healthchecks, new HealthCheckOptions
             {
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
