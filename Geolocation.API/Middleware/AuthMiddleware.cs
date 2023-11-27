@@ -17,6 +17,12 @@ namespace Geolocation.API.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
+            if (context.Request.Path.Equals("/healthchecks"))
+            {
+                await _next(context);
+                return;
+            }
+
             if (!context.Request.Headers.TryGetValue(AuthConst.ApiKeyHeaderName, out var requestApikey))
             {
                 context.Response.StatusCode = 401;
