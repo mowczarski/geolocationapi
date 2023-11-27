@@ -31,9 +31,6 @@ namespace Geolocation.Application
             if (result != null)
             {
                 return Result.Success(new GetGeolocationResponse(
-                    result.Type,
-                    result.Ip,
-                    result.Url,
                     result.Latitude,
                     result.Longitude,
                     result.Continent,
