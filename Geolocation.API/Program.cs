@@ -25,6 +25,14 @@ namespace Geolocation.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddAndConfigureSwagger();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader());
+            });
+
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -52,6 +60,9 @@ namespace Geolocation.API
             app.UseHttpsRedirection();
             app.UseMiddleware<AuthMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+            app.UseCors("AllowAll");
+
             app.UseAuthorization();
 
             app.MapControllers();
