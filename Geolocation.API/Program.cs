@@ -28,7 +28,7 @@ namespace Geolocation.API
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", builder =>
-                    builder.AllowAnyOrigin()
+                    builder.WithOrigins("*")
                            .AllowAnyMethod()
                            .AllowAnyHeader());
             });
@@ -54,14 +54,14 @@ namespace Geolocation.API
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
 
+            app.UseCors("AllowAll");
+
             app.UseSwagger();
             app.UseSwaggerUI();
 
             app.UseHttpsRedirection();
             app.UseMiddleware<AuthMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
-
-            app.UseCors("AllowAll");
 
             app.UseAuthorization();
 
